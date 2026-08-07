@@ -1,0 +1,6 @@
+{
+  "name": "skill-recon",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Scan any installed skill: inventory its files, annotate each file's purpose, and reconstruct its design logic."
+}
