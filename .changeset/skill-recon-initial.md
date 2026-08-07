@@ -2,4 +2,4 @@
 "skill-recon": minor
 ---
 
-首次发布 skill-recon：扫描任意已安装的 skill，盘点文件结构、标注每份文件的用途、还原其内在逻辑与设计思想。
+Initial release of skill-recon: scan any installed skill — inventory its files, annotate each file's purpose, reconstruct its internal logic and design, and surface controllability weaknesses from the red-flag list.

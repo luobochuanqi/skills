@@ -1,49 +1,68 @@
 ---
 name: skill-recon
-description: 扫描任意一个已安装的 skill——盘点它的文件、弄清每份文件的用途、还原它的内在逻辑与设计思想。
+description: Scan any installed skill — inventory its files, annotate each file's purpose, reconstruct its internal logic and design, and surface controllability weaknesses.
 disable-model-invocation: true
 ---
 
 # Skill Recon
 
-当用户新装了一个 skill、对某个 skill 不熟悉、或想确认某个 skill 到底怎么工作、为什么这样设计时，执行本流程：把目标 skill 从它的本地文件**映射**成一张完整的地图——每一份文件是什么、为什么存在、彼此如何协作。
+Map a target skill's local files into a complete picture: what it is, how it works, why it is designed this way — and what **red flags** it carries.
 
-## 步骤
+## Locate the target
 
-### 1. 盘点文件
-列出目标 skill 目录下的**全部**文件路径，含子目录。
+The target comes from the user's invocation: a skill name (resolve it in common skill directories such as `~/.agents/skills`) or a path. Use an explicit target from context; otherwise ask the user.
 
-完成标准：清单覆盖目录中的每一份文件，没有遗漏。
+## Steps
 
-### 2. 弄清每份文件的用途
-对清单中的每一份文件，查明它的作用与存在目的：它是什么、为什么存在、被谁引用、引用谁。按下面的读取策略决定读多少。
+### 1. Inventory the terrain
+List every file path under the target directory, including subdirectories, excluding version-control and dependency noise (`.git`, `node_modules`, etc.).
 
-完成标准：地图上没有空白——每一份文件都有明确标注。
+Completion criterion: the list covers every content file, none omitted.
 
-### 3. 还原内在逻辑与设计思想
-把各文件的用途串起来，用自然语言讲清三件事：
-- **它解决什么问题**：适用场景、何时被调用
-- **它怎么工作**：流程、步骤、分支
-- **它为什么这样设计**：文件如何分工协作、整体组织意图
+### 2. Annotate the legend
+For each file in the list, find out: what it is, why it exists, what references it, what it references. Read as much as the reading strategy below dictates.
 
-完成标准：能对用户讲出一段连贯的解释——"这个 skill 是什么、怎么工作、为什么这样设计"。
+Completion criterion: no blank spots on the map — every file has a clear annotation; a file you cannot annotate gets read further until you can.
 
-## 读取策略
+### 3. Draw the full picture
+Synthesize the files' purposes into three things:
+- **What problem it solves**: target scenarios, when it is invoked
+- **How it works**: flow, steps, branches
+- **Why it is designed this way**: division of labor, organizational intent
 
-按目标 skill 的文件数量分两条路径：
+Completion criterion: all three are clear, and "why" is not a restatement of "what".
 
-**文件数 ≤ 20**：全部文件通读。
+### 4. Hunt for red flags
+Check the target skill against the red-flag list below, actively looking for weak controllability. Every reported red flag needs evidence: quote the triggering text or file.
 
-**文件数 > 20**：
-- 主文档（`SKILL.md`）**必须通读**——它是地图的骨架
-- 被主文档引用的配套文件（如 `GLOSSARY.md`、模板、脚本、references 等）通读
-- 其余文件只读开头部分（约前 20–30 行或前两节），获取大致用途
-- 若只读开头不足以确认某文件的作用，通读该文件
+Completion criterion: every item on the list has been checked, every hit is reported with evidence; unconfirmed suspicions are reported too, marked as such.
 
-## 输出
+## Red-flag list
 
-向用户交付一份简洁的扫描报告：
+- **Implicit side effects**: file operations outside the working directory (writing to `~/.agents`, `~/.claude`, system directories, or other project paths). Operations inside the working directory are visible; external paths are implicit. Clearly disclosed, justified external writes do not count; hidden instructions the user never sees do.
+- **Script-heavy core**: core functionality implemented by running scripts — many scripts, heavy script references in SKILL.md, scripts carrying decision logic. A few mechanical util scripts are fine; main logic in scripts is a black box neither the agent nor the user can audit.
+- **Undisclosed destructive operations**: deletions, overwrites, network requests, environment modifications without explicit disclosure or a confirmation gate in SKILL.md.
+- **Sprawl**: SKILL.md oversized or poorly structured, key instructions drowned in text. Size alone is not a problem; low information density and hard-to-navigate instructions are.
+- **No-op prose**: many "be careful / be thorough / ensure quality" instructions — they do not change default behavior, just pay tokens to say nothing.
+- **Negation steering**: heavy "don't X / never Y" phrasing — it drags the forbidden behavior into context and makes it more likely, not less.
+- **Duplication and contradiction**: the same instruction in multiple places; worse, instructions that contradict each other, leaving the agent no way to comply.
+- **Sediment**: references to nonexistent files, mention of deprecated flows, leftovers from old versions.
+- **Description mismatch**: the description does not match SKILL.md's actual content (claimed functionality differs from the body), or the description is overlong.
 
-1. **文件地图**：目录树 + 每份文件的一句话用途
-2. **内在逻辑**：工作流程、步骤、分支
-3. **设计思想**：文件为何这样组织、整体设计意图
+## Reading strategy
+
+**≤ 20 files**: read everything.
+
+**> 20 files**:
+- The main document (`SKILL.md`, else `README.md`) **must be read in full** — it is the map's skeleton
+- Companion files the main document references (e.g. `GLOSSARY.md`, templates, scripts, references) are read in full
+- Other files: read only the beginning (~first 20–30 lines or first two sections) to capture their purpose
+- A file whose purpose is not clear from the beginning gets read in full
+
+## Output
+
+Deliver a concise scan report to the user:
+
+- **File map**: directory tree + one-line purpose per file
+- **Understanding**: what the skill is, how it works, why it is designed this way (the three things established in step 3)
+- **Red flags**: list of hits, each with evidence (the yield of step 4)
