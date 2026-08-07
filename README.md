@@ -6,6 +6,16 @@
 
 A personal monorepo for agent skills. Every skill ships as a private package under `packages/<name>/` — a `SKILL.md` plus a `package.json` — versioned with [changesets](https://github.com/changesets/changesets). Pushing to `main` runs the Release workflow: pending changesets accumulate into one version PR, and merging it tags every bumped package `name@version`.
 
+[![skills.sh](https://skills.sh/b/luobochuanqi/skills)](https://skills.sh/luobochuanqi/skills)
+
+## Install
+
+Install [skill-recon](https://skills.sh/luobochuanqi/skills/skill-recon) with the [skills CLI](https://www.skills.sh):
+
+```bash
+npx skills add luobochuanqi/skills
+```
+
 ## Skills
 
 | Skill | Version | What it does |

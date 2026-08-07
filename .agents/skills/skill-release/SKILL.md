@@ -1,6 +1,8 @@
 ---
 name: skill-release
 description: Standard end-to-end version-control flow for this skills repo. Use when creating a new skill package, updating an existing skill, writing a changeset, bumping versions, or releasing/tagging a skill here.
+metadata:
+  internal: true
 ---
 
 # Skill Release

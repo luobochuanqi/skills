@@ -1,0 +1,13 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Skill Recon",
+      "description": "Scan any installed skill — inventory its files, annotate each file's purpose, reconstruct its design, and surface controllability weaknesses.",
+      "skills": [
+        "skill-recon"
+      ]
+    }
+  ]
+}
