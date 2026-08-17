@@ -1,5 +1,11 @@
 # skill-recon
 
+## 0.3.0
+
+### Minor Changes
+
+- Work whole-first instead of file-by-file: survey the skill from its main document and layout, then read closely only the files that earn special attention. Deliver findings as a single Markdown report file — every claim grounded in the skill's own files and cited by path and quote — saved where the repo keeps such notes, or somewhere sensible when there is no convention.
+
 ## 0.2.0
 
 ### Minor Changes

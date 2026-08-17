@@ -1,6 +1,6 @@
 {
   "name": "skill-recon",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Scan any installed skill: inventory its files, reconstruct its logic and design, and surface controllability red flags an unfamiliar skill may carry."
+  "description": "Scan any installed skill: build the whole picture of its logic and design, mark the files that deserve a close read, and surface controllability red flags an unfamiliar skill may carry."
 }

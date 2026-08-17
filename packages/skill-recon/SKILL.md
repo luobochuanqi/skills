@@ -1,12 +1,14 @@
 ---
 name: skill-recon
-description: Scan any installed skill — inventory its files, reconstruct its logic and design, and surface controllability red flags an unfamiliar skill may carry.
+description: Scan any installed skill — build the whole picture of its logic and design, mark the files that deserve a close read, and surface controllability red flags an unfamiliar skill may carry.
 disable-model-invocation: true
 ---
 
 # Skill Recon
 
-Map a target skill's local files into a complete picture: what it is, how it works, why it is designed this way — and what **red flags** it carries.
+Map a target skill into a complete picture: what it is, how it works, why it is designed this way — and what **red flags** it carries.
+
+Work **whole-first**: build the picture from the skill's main document and layout before going deep anywhere, then read closely only the files that earn it. Reading every content file cover-to-cover is not the job — most files' purposes are evident from their role alone.
 
 ## Locate the target
 
@@ -14,28 +16,46 @@ The target comes from the user's invocation: a skill name (resolve it in common 
 
 ## Steps
 
-### 1. Inventory the terrain
-List every file path under the target directory, including subdirectories. Exclude version-control, dependency, and packaging noise (the full list is in Reading strategy) — note excluded files' presence but do not treat them as skill logic.
+### 1. Survey the whole
 
-Completion criterion: the list covers every content file, none omitted.
+Read the main document (`SKILL.md`, else `README.md`) **in full** — it is the skeleton of the skill. List the target directory so the layout is in front of you; the subdirectory roles below tell you what kind of thing a file is before you open it. Packaging noise (below) is not skill logic — note its presence, do not read it.
 
-### 2. Annotate the legend
-For each file in the list, find out: what it is, why it exists, what references it, what it references. Recognize the common subdirectory roles (see Reading strategy) before reading — they tell you what kind of thing a file is before you open it. Read as much as the reading strategy below dictates.
+From these two inputs, form the whole picture:
 
-Completion criterion: no blank spots on the map — every file has a clear annotation; a file you cannot annotate gets read further until you can.
+- **What problem it solves** — target scenarios, when it is invoked
+- **How it works** — flow, steps, branches
+- **Why it is designed this way** — division of labor, organizational intent
 
-### 3. Draw the full picture
-Synthesize the files' purposes into three things:
-- **What problem it solves**: target scenarios, when it is invoked
-- **How it works**: flow, steps, branches
-- **Why it is designed this way**: division of labor, organizational intent
+Completion criterion: you can state all three, and the "why" is not a restatement of the "what".
 
-Completion criterion: all three are clear, and "why" is not a restatement of "what".
+### 2. Mark the files that matter
 
-### 4. Hunt for red flags
-Check the target skill against the red-flag list below, actively looking for weak controllability. Every reported red flag needs evidence: quote the triggering text or file.
+Decide which files deserve a close read — the **special-attention set**. A file earns it when:
 
-Completion criterion: every item on the list has been checked, every hit is reported with evidence; unconfirmed suspicions are reported too, marked as such.
+- The main document references it — read it in full
+- Its role is not evident from its name and location — read until it is
+- It may carry behavior the main document does not — `scripts/` entries, `agents/*.yaml`, any file flagged by its subdirectory role
+- A red-flag indicator applies — anything acting outside the skill's own directory (writes, network requests, deletions, environment changes)
+
+Everything else needs only a one-line purpose from its evident role. Read the special-attention set in full; annotate each file: what it is, why it exists, what it references, what references it. Let the annotations refine the step-1 picture.
+
+Completion criterion: every content file is either annotated from a full read or one-lined from an evident role — no file's purpose is a guess.
+
+### 3. Hunt for red flags
+
+Check the target against the red-flag list below, actively looking for weak controllability. Every reported red flag needs evidence: quote the triggering text and its file. Unconfirmed suspicions are reported too, marked as such.
+
+Completion criterion: every item on the list has been checked, and every hit is reported with evidence.
+
+### 4. Write the report
+
+Write the findings to a single Markdown file:
+
+- **Ground every claim in primary evidence** — the skill's own files, never a second-hand impression. Follow each claim back to the file that owns it and cite it: path plus quoted text.
+- **Structure** — red flags first when present (the user's first question is whether the skill is safe to trust), then the file map (directory tree + one-line purpose per file), then the understanding (what / how / why).
+- **Save it where the repo already keeps such notes** — match the existing convention; if there is none, put it somewhere sensible and say where in your reply.
+
+Completion criterion: the report exists as one Markdown file at a stated path, every claim carries its source, and every red-flag hit appears with evidence.
 
 ## Red-flag list
 
@@ -50,19 +70,7 @@ Completion criterion: every item on the list has been checked, every hit is repo
 - **Sediment**: references to nonexistent files, mention of deprecated flows, leftovers from old versions.
 - **Description mismatch**: the description does not match SKILL.md's actual content (claimed functionality differs from the body), or the description is overlong.
 
-## Reading strategy
-
-**Threshold: 20 content files** — count only files the skill logic touches. Exclude packaging noise from the count: `LICENSE`/`LICENSE.txt`, `VERSION`, `package.json`, `CHANGELOG.md`, `dist/` (build output), and any lockfile.
-
-**Small skill (at or below the threshold)**: read every content file in full.
-
-**Large skill (above the threshold)**:
-- The main document (`SKILL.md`, else `README.md`) **must be read in full** — it is the map's skeleton
-- Companion files the main document references (e.g. `GLOSSARY.md`, templates, references) are read in full
-- Other files: read only the beginning (~first 20–30 lines or first two sections) to capture their purpose
-- A file whose purpose is not clear from the beginning gets read in full
-
-### What the common subdirectories hold
+## What the common subdirectories hold
 
 Modern skills carry subdirectories with fixed roles — recognize them rather than treat each file cold:
 
@@ -71,10 +79,6 @@ Modern skills carry subdirectories with fixed roles — recognize them rather th
 - **`references/`** — reference material split out of SKILL.md (disclosed reference). Read enough of each to know what it covers.
 - **`dist/`** — build output, not source. Note its presence, do not read it as a first-class file; the source it was built from is what matters.
 
-## Output
+## What is not skill logic
 
-Deliver a concise scan report to the user. If red flags are present, open with them — the user's first question is whether the skill is safe to trust:
-
-- **File map**: directory tree + one-line purpose per file
-- **Understanding**: what the skill is, how it works, why it is designed this way (the three things established in step 3)
-- **Red flags**: list of hits, each with evidence (the yield of step 4)
+Packaging, version-control, and dependency noise — `LICENSE`/`LICENSE.txt`, `VERSION`, `package.json`, `CHANGELOG.md`, `dist/`, lockfiles — carries no skill logic. Note its presence; do not read it as first-class material.
