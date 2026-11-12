@@ -21,6 +21,7 @@ npx skills add luobochuanqi/skills
 | Skill | Version | What it does |
 | --- | --- | --- |
 | [skill-recon](packages/skill-recon/SKILL.md) | `0.1.0` | Scan any installed skill: inventory its files, annotate each file's purpose, reconstruct its design logic, and surface controllability red flags. |
+| [propose](packages/propose/SKILL.md) | `0.2.0` | Write repo issues that park development ideas and proposals for later work, in a standard layout. |
 | [skill-release](.agents/skills/skill-release/SKILL.md) | — | The release playbook for this repo: scaffold a skill package, version it with changesets, and ship it via version PR or direct push. |
 
 ## How a skill ships

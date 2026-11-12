@@ -1,4 +1,3 @@
-<!-- user rule begin -->
+# luobochuanqi/skills
 
-1. The text of skills must be written in English.
- <!-- user rule end -->
+这是一个使用 changeset 发布我(luobochuanqi)自己的skill的仓库
