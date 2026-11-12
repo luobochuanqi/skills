@@ -1,6 +1,6 @@
 {
   "name": "propose",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Write repo issues that park development ideas and proposals for later work, in a standard layout."
+  "description": "Write repo issues that capture development ideas and proposals for later work, in a standard layout."
 }

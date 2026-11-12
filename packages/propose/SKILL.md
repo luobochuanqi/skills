@@ -1,6 +1,6 @@
 ---
 name: propose
-description: Use when writing an issue that parks an idea or proposal for later development — the thought that surfaces mid-task and must not derail the work at hand. Bug reports and task tracking follow their own formats.
+description: Use when writing an issue that captures a raw idea or proposal for later development — the thought that surfaces mid-task and must not derail the work at hand. Bug reports and task tracking follow their own formats.
 metadata:
   credits:
     skill: show-me
@@ -9,45 +9,37 @@ metadata:
     url: "https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md"
 ---
 
-The issue is a parking spot for a thought that arrived mid-task: capture what will not survive the session, defer polish to pickup. This layout serves that parking alone — bug reports and task tracking keep their own formats. Title the issue in one line, then use this template for the body:
+The issue is where a thought that arrived mid-task waits for later development. Record the idea raw, exactly as it arrived: design waits until the issue is picked up — a solution sketched here anchors the future fix on a path nobody chose. This template is for such ideas alone; bug reports and task tracking keep their own formats. Title the issue in one line, then use this template for the body:
 
 ```markdown
-## Proposal
+## Idea
 
-<what should exist or change, and why it matters — essence first>
+<the thought as it arrived — what it wants and why>
 
-## Context
+## Spark
 
-<the work in progress the idea interrupted, what triggered it, the code it touches>
+<what you were doing, and what you noticed>
 
 ## Shape
 
-<the smallest view that makes the proposal concrete>
-
-## Open Questions
-
-- <undecided point>
-
-## Done When
-
-- <checkable outcome>
+<the picture the idea arrived with, or the observation behind it>
 ```
 
 ## Sections
 
 Skip all preambles and keep prose brief. Use the user's domain language from `GLOSSARY.md`.
 
-### Proposal
+### Idea
 
-The first sentence carries the whole essence — a cold reader triages from it and the title alone. Expand only what the essence leaves out.
+The raw thought in the user's own words: what it wants and why it matters. Anything about how to build it — the solution's shape, acceptance criteria — is design, and design waits for pickup.
 
-### Context
+### Spark
 
-Record the state that evaporates when the session ends: the work the idea interrupted, the observation that triggered it, and the code it touches. Name the workstream it attaches to so it lands in later development deliberately. A reader who wasn't there must be able to start cold.
+The observation behind the thought: the work it interrupted and what you noticed there. A few lines — enough that a reader who wasn't there sees where the idea came from.
 
 ### Shape
 
-Pick the smallest view that makes the proposal concrete:
+Show the idea as it arrived — the picture the thought came with, or the observation behind it; the solution is designed when the issue is picked up. Omit this section when the idea is words only. Pick the smallest view that shows the idea:
 
 - Show logic or an algorithm as pseudocode:
 
@@ -149,12 +141,4 @@ For a state or control-flow change:
 +  invalidate cache
 ```
 
-A proposal already concrete in its text needs no view. Place each visual next to the short text it supports; keep only the calls, files, props, states, and boundaries needed to make the proposal concrete. You may use one of these, you may use several, it is unlikely you will use all of them — use your judgement and don't overwhelm the reader.
-
-### Open Questions
-
-One decision per line, with the options in play. Omit the section when nothing is undecided.
-
-### Done When
-
-One checkable outcome per line. Every behavior the proposal implies appears here; the issue closes when all of them hold.
+Place each visual next to the short text it supports; keep only the calls, files, props, states, and boundaries the idea is about. You may use one of these, you may use several, it is unlikely you will use all of them — use your judgement and don't overwhelm the reader.
