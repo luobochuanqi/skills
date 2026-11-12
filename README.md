@@ -10,7 +10,7 @@ A personal monorepo for agent skills. Every skill ships as a private package und
 
 ## Install
 
-Install [skill-recon](https://skills.sh/luobochuanqi/skills/skill-recon) with the [skills CLI](https://www.skills.sh):
+Install [skill-recon](https://skills.sh/luobochuanqi/skills/skill-recon) or [propose](https://skills.sh/luobochuanqi/skills/propose) with the [skills CLI](https://www.skills.sh):
 
 ```bash
 npx skills add luobochuanqi/skills
@@ -20,7 +20,7 @@ npx skills add luobochuanqi/skills
 
 | Skill | Version | What it does |
 | --- | --- | --- |
-| [skill-recon](packages/skill-recon/SKILL.md) | `0.1.0` | Scan any installed skill: inventory its files, annotate each file's purpose, reconstruct its design logic, and surface controllability red flags. |
+| [skill-recon](packages/skill-recon/SKILL.md) | `0.3.0` | Scan any installed skill: inventory its files, annotate each file's purpose, reconstruct its design logic, and surface controllability red flags. |
 | [propose](packages/propose/SKILL.md) | `0.2.0` | Write repo issues that park development ideas and proposals for later work, in a standard layout. |
 | [skill-release](.agents/skills/skill-release/SKILL.md) | — | The release playbook for this repo: scaffold a skill package, version it with changesets, and ship it via version PR or direct push. |
 
@@ -30,7 +30,7 @@ npx skills add luobochuanqi/skills
   <img src="./assets/readme/workflow.svg" width="100%" alt="Release flow: edit SKILL.md, add a changeset, CI opens the version PR, merging tags name@version">
 </p>
 
-1. **Scaffold** `packages/<name>/` — a `package.json` and a `SKILL.md`, written in English (repo rule).
+1. **Scaffold** `packages/<name>/` — a `package.json` and a `SKILL.md`, written in English.
 2. **Add a changeset** — `pnpm changeset`; a first release is `minor` (`0.0.0` → `0.1.0`).
 3. **Push to `main`** — CI opens the cumulative version PR, *"chore: version skills"*.
 4. **Squash-merge it** — CI tags every bumped package `name@version`; private packages are tagged too.
@@ -72,6 +72,6 @@ packages/<name>/     skill packages — SKILL.md, package.json, CHANGELOG.md
 
 ## Notes
 
-- Skill text must be written in English.
+- Skill text is written in English.
 - Version PRs are cumulative — changesets from several skills pile into one PR until you merge it.
 - Tags use the `name@version` form (e.g. `skill-recon@0.1.0`), and private packages are tagged.
